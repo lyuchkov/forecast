@@ -10,64 +10,32 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class Parser {
-    public Parser() {
+    public Parser() throws IOException {
     }
+     Document pageYandex = Jsoup.connect("https://yandex.ru/pogoda/saint-petersburg").get();
+     Document pageGismeteo = Jsoup.connect("https://www.gismeteo.ru").get();
+     Document pageRambler = Jsoup.connect("https://weather.rambler.ru/v-sankt-peterburge/").get();
+
     public String tempYandex(){
-            Document page = null;
-            try {
-                page = Jsoup.connect("https://yandex.ru/pogoda/saint-petersburg").get();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            String temp = page.select("div[class=temp fact__temp fact__temp_size_s]").text();
+            String temp = pageYandex.select("div[class=temp fact__temp fact__temp_size_s]").text();
             return temp;
         }
     public String barYandex(){
-        Document page = null;
-        try {
-            page = Jsoup.connect("https://yandex.ru/pogoda/saint-petersburg").get();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String bar = page.select("div[class=term term_orient_v fact__pressure]").text();
+            String bar = pageYandex.select("div[class=term term_orient_v fact__pressure]").text();
         return bar;
     } public String windYandex(){
-        Document page = null;
-        try {
-            page = Jsoup.connect("https://yandex.ru/pogoda/saint-petersburg").get();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String bar = page.select("div[class=term term_orient_v fact__wind-speed]").text();
+        String bar = pageYandex.select("div[class=term term_orient_v fact__wind-speed]").text();
         return bar;
     } public String tempGismeteo(){
-            Document page = null;
-            try {
-                page = Jsoup.connect("https://www.gismeteo.ru").get();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            String temp = page.select("span[class=value unit unit_temperature_c]").first().text();
+            String temp = pageGismeteo.select("span[class=value unit unit_temperature_c]").first().text();
             return temp;
         }
     public String barGismeteo(){
-        Document page = null;
-        try {
-            page = Jsoup.connect("https://www.gismeteo.ru").get();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String bar = page.select("span[class=unit unit_pressure_mm_hg_atm]").first().text();
+        String bar = pageGismeteo.select("span[class=unit unit_pressure_mm_hg_atm]").first().text();
         return bar;
     } public String windGismeteo(){
-        Document page = null;
-        try {
-            page = Jsoup.connect("https://www.gismeteo.ru/weather-sankt-peterburg-4079/").get();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String bar = page.select("span[class=unit unit_wind_m_s]").first().text();
+        String bar = pageGismeteo.select("span[class=unit unit_wind_m_s]").first().text();
         return bar;
     }
-
+    //Мне лень добавлять еще,  представь тут еще 3 таких метода
 }
